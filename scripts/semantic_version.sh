@@ -23,12 +23,6 @@ major=${major_minor_patch[0]:1}
 minor=${major_minor_patch[1]}
 patch=${major_minor_patch[2]}
 
-echo ---
-echo $major
-echo $minor
-echo $patch 
-echo ---
-
 next_major=v$((major+1)).0.0
 next_minor=v${major}.$((minor+1)).0
 next_patch=v${major}.${minor}.$((patch+1))

@@ -15,7 +15,7 @@ build: ## Build Web.
 	@echo "+---------------------+"
 	@echo "| Building Containers |"
 	@echo "+---------------------+"
-	docker build -t $(IMAGE)
+	docker build -t $(IMAGE) .
 
 .PHONY: up 
 up: ## Start development environment.
@@ -32,6 +32,7 @@ down: ## Bring down development environment.
 login: ## Login to Docker Hub
 	@echo "Login to DockerHub."
 	docker login
+	@echo docker tag $(IMAGE) $(IMAGE):$(TAG)
 
 .PHONY: version
 version: ## Make a release tag
@@ -43,6 +44,7 @@ publish: ## Publish to ECR
 	@echo "Build and Publish"
 
 	make build
+	make version
 	docker tag $(IMAGE) $(IMAGE):$(TAG)
 	docker tag $(IMAGE) $(IMAGE):latest
 	docker push $(IMAGE):$(TAG)

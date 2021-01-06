@@ -4,13 +4,14 @@ WORKDIR /opt/build
 ADD main.go ./
 ADD main_test.go ./
 ADD go.mod ./
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -ldflags '-w' *.go
+
+RUN go test
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -ldflags '-w'
 
 # ---
 
-#FROM ubuntu
 FROM alpine:latest
-#FROM golang:1.15
 
 EXPOSE 8080
 
