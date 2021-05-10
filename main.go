@@ -7,11 +7,13 @@ import (
 	"os"
 	"strings"
 
+	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 type echgoHandler struct {
-	Echgos []byte
+	echgos  []byte
+	metrics *prometheus.CounterVec
 }
 
 func errorHandler(res http.ResponseWriter, req *http.Request, status int) {
@@ -36,12 +38,14 @@ func (h echgoHandler) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	log.Printf("%s %s %s User-Agent: %s\n", req.Method, req.Proto, req.URL.Path, req.Header["User-Agent"])
 
 	if req.URL.Path != "/" {
+		h.metrics.WithLabelValues("fail").Inc()
 		errorHandler(res, req, http.StatusNotFound)
 		return
 	}
 
+	h.metrics.WithLabelValues("success").Inc()
 	res.WriteHeader(200)
-	res.Write(h.Echgos)
+	res.Write(h.echgos)
 }
 
 func registerEchgos() map[string]string {
@@ -86,9 +90,18 @@ func main() {
 	}
 	log.Printf("Registered: %s", echgos)
 
+	promCounter := prometheus.NewCounterVec(
+		prometheus.CounterOpts{
+			Name: "root_requests_total",
+			Help: "Hits to the root echo path",
+		},
+		[]string{"status"},
+	)
+	prometheus.MustRegister(promCounter)
+
 	mux := http.NewServeMux()
 
-	mux.Handle("/", &echgoHandler{Echgos: echgos})
+	mux.Handle("/", &echgoHandler{echgos: echgos, metrics: promCounter})
 	mux.Handle("/metrics", promhttp.Handler())
 
 	server := &http.Server{
