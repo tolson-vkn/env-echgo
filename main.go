@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 type echgoHandler struct {
@@ -87,6 +89,7 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.Handle("/", &echgoHandler{Echgos: echgos})
+	mux.Handle("/metrics", promhttp.Handler())
 
 	server := &http.Server{
 		Addr:    ":8080",
