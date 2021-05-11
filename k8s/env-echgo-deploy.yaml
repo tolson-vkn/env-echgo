@@ -19,7 +19,7 @@ spec:
         app: env-echgo
     spec: 
       containers:
-      - image: timmyolson/env-echgo:latest
+      - image: ghcr.io/tolson-vkn/env-echgo:latest
         name: env-echgo
         ports:
         - containerPort: 5000
