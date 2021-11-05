@@ -6,6 +6,7 @@ metadata:
     app: env-echgo
   namespace: default
 spec:
+  # nodeName: ip-10-102-219-72.ec2.internal
   containers:
   - image: ghcr.io/tolson-vkn/env-echgo:latest
     imagePullPolicy: Always
@@ -23,11 +24,4 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: spec.nodeName
-    resources:
-      limits:
-        cpu: "200m"
-        memory: "200Mi"
-      requests:
-        cpu: "100m"
-        memory: "100Mi"
   restartPolicy: Always

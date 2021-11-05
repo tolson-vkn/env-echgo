@@ -8,7 +8,7 @@ metadata:
   name: env-echgo
   namespace: default
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - name: http
       port: 8080

@@ -8,7 +8,7 @@ metadata:
   name: env-echgo
   namespace: default
 spec:
-  replicas: 5
+  replicas: 2
   strategy: {}
   selector:
     matchLabels:

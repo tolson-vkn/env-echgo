@@ -32,6 +32,22 @@ env:
       fieldPath: metadata.name
 ```
 
+```
+$ kubectl apply -f deploy.yaml -f k8s/clusterip-service.yaml -f k8s/ingress.yaml
+deployment.apps/env-echgo unchanged
+service/env-echgo configured
+ingress.extensions/env-echgo-ing configured
+$ kubectl get -f deploy.yaml -f k8s/clusterip-service.yaml -f k8s/ingress.yaml
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/env-echgo   2/2     2            2           4h13m
+
+NAME                TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)          AGE
+service/env-echgo   LoadBalancer   10.0.39.209   20.83.131.161   8080:31642/TCP   53m
+
+NAME                               CLASS    HOSTS                  ADDRESS   PORTS   AGE
+ingress.extensions/env-echgo-ing   <none>   envechgo.example.com             80      4h11m
+```
+
 ## Demo
 
 ```
