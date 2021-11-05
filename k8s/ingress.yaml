@@ -1,23 +1,25 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations: 
-    kuberentes.io/ingress.class: nginx
     # cert-manager.io/cluster-issuer: "letsencrypt-prod"
   name: env-echgo-ing
   namespace: default
 spec:
+  ingressClassName: nginx
   rules:
     - host: envechgo.example.com
       http:
         paths:
-          - backend:
-              serviceName: env-echgo
-              servicePort: 8000
-            path: /
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: env-echgo
+                port:
+                  number: 8080
   # tls:
   #   - hosts:
-  #       - wordsandwhiskey.show
-  #       - www.wordsandwhiskey.show
-  #     secretName: tolson-io-secret
+  #       - envechgo.example.com
+  #     secretName: tls-secret
 
