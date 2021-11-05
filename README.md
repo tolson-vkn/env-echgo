@@ -51,7 +51,8 @@ ingress.extensions/env-echgo-ing   <none>   envechgo.example.com             80 
 ```
 
 ```
-curl -D- http://203.0.113.10 -H 'Host: myapp.example.com'
+# Replace 203.0.113.10 with your nginx controller loadbalancer
+curl -D- http://203.0.113.10 -H 'Host: envechgo.example.com'
 ```
 
 ## Demo
