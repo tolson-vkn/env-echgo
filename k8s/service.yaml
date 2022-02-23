@@ -7,7 +7,7 @@ metadata:
   labels:
     app: env-echgo
   name: env-echgo
-  namespace: default
+  namespace: env-echgo
 spec:
   type: LoadBalancer
   ports:
