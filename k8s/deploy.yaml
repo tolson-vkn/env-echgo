@@ -22,7 +22,7 @@ spec:
       - image: ghcr.io/tolson-vkn/env-echgo:latest
         name: env-echgo
         ports:
-        - containerPort: 5000
+        - containerPort: 8080
         env:
         - name: ECHGO_POD_NAME
           valueFrom:
